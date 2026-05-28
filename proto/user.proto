@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package auth.v1;
+package user.v1;
 
 service UserService {
   rpc GetProfile(GetProfileRequest) returns (UserDataResponse);
@@ -44,14 +44,3 @@ message UserDataResponse {
   string created_at = 6;
   string updated_at = 7;
 }
-
-
-
-
-
-
-
-
-
-
-

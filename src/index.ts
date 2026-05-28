@@ -1,3 +1,2 @@
-export * from './gen/auth';
-export * from './gen/user';
-
+export * as AuthContracts from './gen/auth';
+export * as UserContracts from './gen/user';
