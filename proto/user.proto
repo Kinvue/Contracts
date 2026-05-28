@@ -5,12 +5,13 @@ package auth.v1;
 service UserService {
   rpc GetProfile(GetProfileRequest) returns (UserDataResponse);
   rpc UpdateProfile(UpdateProfileRequest) returns (UserDataResponse);
+  rpc SearchUsers(SearchUsersRequest) returns (SearchUsersResponse);
 }
 
+//
 message GetProfileRequest {
   string user_id = 1;
 }
-
 message UpdateProfileRequest {
   string user_id = 1;
 
@@ -19,6 +20,19 @@ message UpdateProfileRequest {
   optional string password = 4;
 }
 
+//Search Users
+message SearchUsersRequest {
+  optional string name = 1;
+  optional string email = 2;
+
+  optional int32 limit = 3;
+  optional int32 offset = 4;
+}
+message SearchUsersResponse {
+  repeated UserDataResponse users = 1; 
+}
+
+//shared
 message UserDataResponse {
   string id = 1;
   string name = 2;
@@ -30,3 +44,14 @@ message UserDataResponse {
   string created_at = 6;
   string updated_at = 7;
 }
+
+
+
+
+
+
+
+
+
+
+
