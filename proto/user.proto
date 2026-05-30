@@ -3,44 +3,132 @@ syntax = "proto3";
 package user.v1;
 
 service UserService {
-  rpc GetProfile(GetProfileRequest) returns (UserDataResponse);
-  rpc UpdateProfile(UpdateProfileRequest) returns (UserDataResponse);
+  rpc CreateProfile(CreateProfileRequest) returns (UserProfileResponse);
+  rpc GetProfile(GetProfileRequest) returns (UserProfileResponse);
+  rpc GetProfileByAuthUserId(GetProfileByAuthUserIdRequest) returns (UserProfileResponse);
+  rpc UpdateProfile(UpdateProfileRequest) returns (UserProfileResponse);
   rpc SearchUsers(SearchUsersRequest) returns (SearchUsersResponse);
+
+  rpc GetSettings(GetSettingsRequest) returns (UserSettingsResponse);
+  rpc UpdateSettings(UpdateSettingsRequest) returns (UserSettingsResponse);
+
+  rpc SendFriendRequest(SendFriendRequestRequest) returns (FriendResponse);
+  rpc RespondFriendRequest(RespondFriendRequestRequest) returns (FriendResponse);
+  rpc GetFriends(GetFriendsRequest) returns (GetFriendsResponse);
 }
 
-//
+// Profile
+
+message CreateProfileRequest {
+  string auth_user_id = 1;
+  string username = 2;
+
+  optional string display_name = 3;
+  optional string avatar_url = 4;
+  optional string bio = 5;
+}
+
 message GetProfileRequest {
   string user_id = 1;
 }
+
+message GetProfileByAuthUserIdRequest {
+  string auth_user_id = 1;
+}
+
 message UpdateProfileRequest {
   string user_id = 1;
 
-  optional string name = 2;
-  optional string email = 3;
-  optional string password = 4;
+  optional string username = 2;
+  optional string display_name = 3;
+  optional string avatar_url = 4;
+  optional string bio = 5;
+  optional string status = 6;
 }
 
-//Search Users
 message SearchUsersRequest {
-  optional string name = 1;
-  optional string email = 2;
+  optional string username = 1;
+  optional string display_name = 2;
 
   optional int32 limit = 3;
   optional int32 offset = 4;
 }
+
 message SearchUsersResponse {
-  repeated UserDataResponse users = 1; 
+  repeated UserProfileResponse users = 1;
 }
 
-//shared
-message UserDataResponse {
+message UserProfileResponse {
   string id = 1;
-  string name = 2;
-  string email = 3;
+  string auth_user_id = 2;
 
-  bool is_email_verified = 4;
-  bool is_banned = 5;
+  string username = 3;
+  string display_name = 4;
+  string avatar_url = 5;
+  string bio = 6;
+  string status = 7;
+
+  string created_at = 8;
+  string updated_at = 9;
+}
+
+// Settings
+
+message GetSettingsRequest {
+  string user_id = 1;
+}
+
+message UpdateSettingsRequest {
+  string user_id = 1;
+
+  optional string language = 2;
+  optional string theme = 3;
+  optional bool notifications_enabled = 4;
+}
+
+message UserSettingsResponse {
+  string id = 1;
+  string user_id = 2;
+
+  string language = 3;
+  string theme = 4;
+  bool notifications_enabled = 5;
 
   string created_at = 6;
   string updated_at = 7;
+}
+
+// Friends
+
+message SendFriendRequestRequest {
+  string requester_id = 1;
+  string receiver_id = 2;
+}
+
+message RespondFriendRequestRequest {
+  string friendship_id = 1;
+  string status = 2; // accepted | rejected | blocked
+}
+
+message GetFriendsRequest {
+  string user_id = 1;
+
+  optional string status = 2;
+  optional int32 limit = 3;
+  optional int32 offset = 4;
+}
+
+message GetFriendsResponse {
+  repeated FriendResponse friends = 1;
+}
+
+message FriendResponse {
+  string id = 1;
+
+  string requester_id = 2;
+  string receiver_id = 3;
+  string status = 4;
+
+  string created_at = 5;
+  string updated_at = 6;
 }

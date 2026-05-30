@@ -1,6 +1,6 @@
 {
   "name": "@kinvue/contracts",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Contracts package for gRPC communication in KinVue services network",
   "homepage": "https://github.com/Kinvue/Contracts#readme",
   "bugs": {
