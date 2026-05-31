@@ -64,6 +64,6 @@ message ClientInfo {
 }
 
 enum Role {
-  ADMIN;
-  USER;
+  ADMIN = 0;
+  USER = 1;
 }
