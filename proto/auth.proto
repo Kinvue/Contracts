@@ -54,7 +54,7 @@ message AuthResponse {
 message UserPayload {
   string id = 1;
   string email = 2;
-  Role role = 3;
+  string role = 3;
   string status = 4;
 }
 
@@ -62,9 +62,4 @@ message ClientInfo {
   string user_agent = 1;
   string ip_address = 2;
   string name = 3;
-}
-
-enum Role {
-  ADMIN = 0;
-  USER = 1;
 }
