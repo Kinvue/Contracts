@@ -52,10 +52,11 @@ message AuthResponse {
 }
 
 message UserPayload {
-  string id = 1;
-  string email = 2;
-  string role = 3;
-  string status = 4;
+  string userId = 1;
+  string authId = 2;
+  string email = 3;
+  string role = 4;
+  string status = 5;
 }
 
 message ClientInfo {
