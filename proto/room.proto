@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+package room;
+
+service RoomService {
+  rpc CreateRoom (CreateRoomRequest) returns (RoomResponse);
+  rpc GetRoomById (GetRoomByIdRequest) returns (RoomResponse);
+  rpc GetUserRooms (GetUserRoomsRequest) returns (RoomsListResponse);
+  rpc CloseRoom (CloseRoomRequest) returns (RoomResponse);
+
+  rpc JoinRoom (JoinRoomRequest) returns (RoomResponse);
+  rpc LeaveRoom (LeaveRoomRequest) returns (RoomResponse);
+  rpc GetRoomParticipants (GetRoomParticipantsRequest) returns (ParticipantsListResponse);
+
+  rpc CreateInvite (CreateInviteRequest) returns (InviteResponse);
+  rpc GetRoomByInviteCode (GetRoomByInviteCodeRequest) returns (RoomResponse);
+  rpc JoinRoomByInviteCode (JoinRoomByInviteCodeRequest) returns (RoomResponse);
+}
+
+message Room {
+  string id = 1;
+  string ownerId = 2;
+  string movieId = 3;
+  string title = 4;
+  string status = 5;
+  int32 maxParticipants = 6;
+  string inviteCode = 7;
+  string createdAt = 8;
+  string updatedAt = 9;
+}
+
+message Participant {
+  string id = 1;
+  string roomId = 2;
+  string userId = 3;
+  string role = 4;
+  string status = 5;
+  string joinedAt = 6;
+  string leftAt = 7;
+}
+
+message Invite {
+  string id = 1;
+  string roomId = 2;
+  string code = 3;
+  string inviteLink = 4;
+  string status = 5;
+  string expiresAt = 6;
+  string createdAt = 7;
+}
+
+message CreateRoomRequest {
+  string userId = 1;
+  string movieId = 2;
+  string title = 3;
+  int32 maxParticipants = 4;
+}
+
+message GetRoomByIdRequest {
+  string userId = 1;
+  string roomId = 2;
+}
+
+message GetUserRoomsRequest {
+  string userId = 1;
+}
+
+message CloseRoomRequest {
+  string userId = 1;
+  string roomId = 2;
+}
+
+message JoinRoomRequest {
+  string userId = 1;
+  string roomId = 2;
+}
+
+message LeaveRoomRequest {
+  string userId = 1;
+  string roomId = 2;
+}
+
+message GetRoomParticipantsRequest {
+  string userId = 1;
+  string roomId = 2;
+}
+
+message CreateInviteRequest {
+  string userId = 1;
+  string roomId = 2;
+}
+
+message GetRoomByInviteCodeRequest {
+  string userId = 1;
+  string inviteCode = 2;
+}
+
+message JoinRoomByInviteCodeRequest {
+  string userId = 1;
+  string inviteCode = 2;
+}
+
+message RoomResponse {
+  Room room = 1;
+}
+
+message RoomsListResponse {
+  repeated Room rooms = 1;
+}
+
+message ParticipantsListResponse {
+  repeated Participant participants = 1;
+}
+
+message InviteResponse {
+  Invite invite = 1;
+}
